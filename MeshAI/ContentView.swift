@@ -86,7 +86,6 @@ struct NameSetupView: View {
 struct RoomListView: View {
     let userName: String
     @State private var newRoomName: String = ""
-    @State private var activeRoom: String? = nil
     @State private var rooms: [String] = ["Emergenza", "Soccorso", "Generale"]
     @State private var showAddRoom: Bool = false
 

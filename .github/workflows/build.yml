@@ -1,0 +1,46 @@
+name: Build MeshAI iOS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # Permette di avviare manualmente dal sito GitHub
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # 1. Scarica il codice
+      - name: Checkout codice
+        uses: actions/checkout@v4
+
+      # 2. Seleziona Xcode
+      - name: Seleziona Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      # 3. Crea il progetto Xcode automaticamente tramite xcodegen
+      - name: Installa xcodegen
+        run: brew install xcodegen
+
+      - name: Genera progetto Xcode
+        run: xcodegen generate
+
+      # 4. Compila (senza firma — produce .app non installabile ma verifica che il codice funzioni)
+      - name: Build
+        run: |
+          xcodebuild \
+            -scheme MeshAI \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+
+      # 5. Salva i log come artefatto scaricabile
+      - name: Salva artefatti build
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build/

@@ -216,11 +216,9 @@ class RoomViewModel: ObservableObject {
 
     // MARK: - Internet Check Loop
     private func checkInternetLoop() async {
-        while true {
+        while !Task.isCancelled {
             let online = await aiService.hasInternetConnection()
-            await MainActor.run {
-                self.hasInternet = online
-            }
+            hasInternet = online  // già su @MainActor
             try? await Task.sleep(nanoseconds: 10_000_000_000) // ogni 10 secondi
         }
     }
