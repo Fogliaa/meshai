@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- ✅ OBBLIGATORIO: Descrizione per uso Bluetooth -->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>MeshAI usa il Bluetooth per connettere i dispositivi nella stessa stanza senza internet, permettendo la comunicazione in emergenza.</string>
+
+    <!-- ✅ OBBLIGATORIO: Descrizione per rete locale -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>MeshAI usa la rete locale WiFi per connettere i dispositivi nella stanza in modo diretto, senza bisogno di internet.</string>
+
+    <!-- ✅ OBBLIGATORIO: Bonjour services per MultipeerConnectivity -->
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_meshai-room._tcp</string>
+        <string>_meshai-room._udp</string>
+    </array>
+
+    <!-- App settings -->
+    <key>CFBundleDisplayName</key>
+    <string>MeshAI</string>
+
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>bluetooth-le</string>
+    </array>
+
+    <key>UIBackgroundModes</key>
+    <array>
+        <!-- Permette di ricevere messaggi in background (limitato su iOS) -->
+        <string>bluetooth-central</string>
+        <string>bluetooth-peripheral</string>
+    </array>
+</dict>
+</plist>
